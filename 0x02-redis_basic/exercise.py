@@ -18,7 +18,10 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int, None]:
+    def get(
+        self, key: str, fn: Callable = None
+    ) -> Union[str, bytes, int, None]:
+        pass
         data = self._redis.get(key)
         if data is None:
             return None
