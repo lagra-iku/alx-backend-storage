@@ -3,9 +3,20 @@
 a Python function that returns all students sorted by average score
 """
 
+import functools
 import uuid
 import redis
-from typing import Union
+from typing import Union, Callable
+
+
+def count_calls(method: Callable) -> Callable:
+    """Decorator to count the number of times a method is called."""
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache:
